@@ -3,5 +3,9 @@ const professorController = require('../controller/ProfessorController')
 
 professorRouter.route('/professor')
     .post(function (req, res, next) {
-        //link with the controller
+        const professorBody = req.body
+
+        if( !professorBody.email ){
+            
+        }
     })

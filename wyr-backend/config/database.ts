@@ -1,16 +1,15 @@
-import { Sequelize } from "sequelize";
-import * as dotenv from "dotenv";
+import { Sequelize } from 'sequelize'
+import dotenv from 'dotenv'
 
-dotenv.config()
+dotenv.config();
 
-const sequelize = new Sequelize*({
-  dialect: process.env.DB_TYPE,
-  username: process.env.POSTGRES_USER,
-  host: process.env.POSTGRES_HOST,
-  database: process.env.POSTGRES_DB,
-  password: process.env.POSTGRES_PASSWORD,
-  port: process.env.PORT,
-  logging: false
-})
-
-// module.exports = pool
+const sequelize = new Sequelize({
+    dialect: process.env.DB_DIALECT as "postgres" | "mysql",
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    logging: false,
+});
+export default sequelize;

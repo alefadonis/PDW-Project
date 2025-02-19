@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Professor {
+  id         Int    @id @default(autoincrement())
+  firstName  String
+  lastName   String
+  email      String @unique
+  password   String
+  classes    ProfessorsClasses[]
+  attendance Attendance[]
+}
+
+model Class {
+  id         Int    @id @default(autoincrement())
+  name       String
+  professors ProfessorsClasses[]
+  students   StudentClasses[]
+  attendance Attendance[]
+}
+
+model Student {
+  id             Int    @id @default(autoincrement())
+  enrollmentCode String
+  firstName      String
+  lastName       String
+  email          String @unique
+  password       String
+  classes        StudentClasses[]
+  attendance     Attendance[]
+}
+
+model ProfessorsClasses {
+  professorId Int
+  classId     Int
+
+  professor Professor @relation(fields: [professorId], references: [id], onDelete: Cascade)
+  class     Class     @relation(fields: [classId], references: [id], onDelete: Cascade)
+
+  @@id([professorId, classId])
+}
+
+model StudentClasses {
+  studentId Int
+  classId   Int
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  class   Class   @relation(fields: [classId], references: [id], onDelete: Cascade)
+
+  @@id([studentId, classId])
+}
+
+model Attendance {
+  id                  Int      @id @default(autoincrement())
+  professorId         Int
+  studentId           Int
+  classId             Int
+  scannedAt           DateTime @default(now())
+  attendanceLatitude  Float
+  attendanceLongitude Float
+  professorLatitude   Float
+  professorLongitude  Float
+
+  professor Professor @relation(fields: [professorId], references: [id], onDelete: Cascade)
+  student   Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  class     Class     @relation(fields: [classId], references: [id], onDelete: Cascade)
+}

@@ -1,15 +1,8 @@
-import { Sequelize } from 'sequelize'
+import { PrismaClient } from '@prisma/client';
 import dotenv from 'dotenv'
 
 dotenv.config();
 
-const sequelize = new Sequelize({
-    dialect: process.env.DB_DIALECT as "postgres" | "mysql",
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT),
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    logging: false,
-});
-export default sequelize;
+const prismaDB = new PrismaClient();
+
+export default prismaDB;

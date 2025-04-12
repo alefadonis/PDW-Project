@@ -1,5 +1,6 @@
 import prismaDB from "../config/database";
 import { Student, StudentCreate } from "../models/Student";
+import { User } from "../models/UserAuth";
 
 export class StudentRepository {
   async createNewStudent(student: StudentCreate) {
@@ -58,6 +59,25 @@ export class StudentRepository {
       studentResult.lastName,
       studentResult.email
     );
+  }
+
+  async getStudentByEmailForLogin(email: string): Promise<User> {
+    const studentResult = await prismaDB.student.findUnique({
+      where: { email },
+    });
+
+    if (!studentResult) {
+      throw new Error("User not found")
+    }
+
+    const userAuth : User = {
+      id: studentResult.id,
+      email: studentResult.email,
+      password: studentResult.password,
+      role: 'student'
+    }
+
+    return userAuth ;
   }
 
   async getAllStudents(): Promise<Student[]> {

@@ -1,13 +1,14 @@
-import chai from 'chai';
-import chaiHttp, { request } from 'chai-http';
+/// <reference types="mocha" />
+
+import request from 'supertest';
+import { expect } from 'chai';
 import { app } from '../index';
 import sinon from 'sinon';
 import { StudentRepository } from '../repository/StudentRepository';
 
-chai.use(chaiHttp);
-const { expect } = chai;
-
 describe('StudentService', () => {
+  afterEach(() => sinon.restore());
+
   it('should create a new student', async () => {
     sinon.stub(StudentRepository.prototype, 'getStudentByEmail').resolves(null);
     sinon.stub(StudentRepository.prototype, 'createNewStudent').resolves({
@@ -18,7 +19,7 @@ describe('StudentService', () => {
       email: 'tom@example.com',
     });
 
-    const res = await request.execute(app).post('/student').send({
+    const res = await request(app).post('/student').send({
       data: {
         enrollmentCode: '123ABC',
         firstName: 'Tom',
@@ -29,7 +30,6 @@ describe('StudentService', () => {
     });
 
     expect(res.status).to.equal(201);
-    sinon.restore();
   });
 
   it('should return all students', async () => {
@@ -43,10 +43,8 @@ describe('StudentService', () => {
       },
     ]);
 
-    const res = await request.execute(app).get('/student/all');
+    const res = await request(app).get('/student/all');
     expect(res.status).to.equal(200);
     expect(res.body.length).to.be.greaterThan(0);
-
-    sinon.restore();
   });
 });

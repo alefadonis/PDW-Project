@@ -1,13 +1,14 @@
-import chai from 'chai';
-import chaiHttp, { request } from 'chai-http';
-import { app }  from '../index';
+/// <reference types="mocha" />
+
+import request from 'supertest';
+import { expect } from 'chai';
+import { app } from '../index';
 import sinon from 'sinon';
 import { ProfessorRepository } from '../repository/ProfessorRepository';
 
-chai.use(chaiHttp);
-const { expect } = chai;
-
 describe('ProfessorService', () => {
+  afterEach(() => sinon.restore());
+
   it('should create a new professor', async () => {
     sinon.stub(ProfessorRepository.prototype, 'getProfessorByEmail').resolves(null);
     sinon.stub(ProfessorRepository.prototype, 'createNewProfessor').resolves({
@@ -18,7 +19,7 @@ describe('ProfessorService', () => {
       password: 'hashed_password',
     });
 
-    const res = await request.execute(app).post('/professor').send({
+    const res = await request(app).post('/professor').send({
       data: {
         firstName: 'John',
         lastName: 'Doe',
@@ -29,8 +30,6 @@ describe('ProfessorService', () => {
 
     expect(res.status).to.equal(201);
     expect(res.body.firstName).to.equal('John');
-
-    sinon.restore();
   });
 
   it('should return all professors', async () => {
@@ -44,10 +43,8 @@ describe('ProfessorService', () => {
       },
     ]);
 
-    const res = await request.execute(app).get('/professor/all');
+    const res = await request(app).get('/professor/all');
     expect(res.status).to.equal(200);
     expect(res.body.length).to.be.greaterThan(0);
-
-    sinon.restore();
   });
 });

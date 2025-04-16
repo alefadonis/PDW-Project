@@ -1,0 +1,38 @@
+.topbar {
+    height: 60px;
+    background-color: #273142;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    color: white;
+}
+
+.search-box input {
+    background-color: #323D4E;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    color: white;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-name {
+    font-weight: 700;
+}
+
+.user-role {
+    font-size: 12px;
+    color: #bbb;
+}
+
+.avatar {
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+}

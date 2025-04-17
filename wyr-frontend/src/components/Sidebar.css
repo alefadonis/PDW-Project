@@ -1,0 +1,33 @@
+.sidebar {
+    width: 250px;
+    background-color: #273142;
+    color: #ffffff;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: #4880FF;
+    margin-bottom: 2rem;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sidebar-item {
+    font-size: 24px;
+    font-weight: 500;
+    text-decoration: none;
+    color: #ffffff;
+    transition: 0.2s;
+}
+
+.sidebar-item:hover {
+    color: #4880FF;
+}

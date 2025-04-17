@@ -1,5 +1,6 @@
 import prismaDB from "../config/database";
 import { Professor, ProfessorCreate } from "../models/Professor";
+import { User } from "../models/UserAuth";
 
 export class ProfessorRepository {
   async createNewProfessor(professor: ProfessorCreate) {
@@ -52,8 +53,28 @@ export class ProfessorRepository {
       professorResult.id,
       professorResult.firstName,
       professorResult.lastName,
-      professorResult.email
+      professorResult.email,
+      professorResult.password
     );
+  }
+
+    async getProfessorByEmailForLogin(email: string): Promise<User> {
+    const professorResult = await prismaDB.professor.findUnique({
+      where: { email },
+    });
+
+    if (!professorResult) {
+      throw new Error("Professor not found!")
+    }
+
+    const user: User = {
+      id : professorResult.id,
+      email : professorResult.email,
+      password : professorResult.password,
+      role: "professor"
+    }
+
+    return user;
   }
 
   async getAllProfessors(): Promise<Professor[]> {

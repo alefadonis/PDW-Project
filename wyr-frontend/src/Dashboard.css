@@ -1,0 +1,28 @@
+.dashboard-container {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.graph-card {
+    background: #273142;
+    border: 1px solid #313D4F;
+    border-radius: 14px;
+    padding: 1rem;
+    box-sizing: border-box;
+    flex: 1;
+}
+
+.graph-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    .graph-row {
+        flex-direction: column;
+    }
+}

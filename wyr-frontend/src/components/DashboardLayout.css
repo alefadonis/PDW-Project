@@ -1,0 +1,20 @@
+.dashboard-layout {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    background-color: #1B2431;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.content-body {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+    background-color: #f7f8fa;
+}

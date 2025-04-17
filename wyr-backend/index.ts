@@ -15,12 +15,14 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
+
 app.use('', authService);
 
 app.use('/professor', auth, authorizeRoles('professor'), professorService);
 app.use('/student', auth, authorizeRoles('student'), studentService);
 
 app.use('/class', auth, authorizeRoles('professor', 'student'), classService);
+
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
